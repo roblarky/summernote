@@ -13,7 +13,9 @@
     <title>Test</title>
   </head>
 	<body>
+		<div class="container">
 		<div id="summernote">
+			<div class="tabs-block">
 			<ul class="nav nav-tabs" id="myTab" role="tablist">
 			  <li class="nav-item">
 				<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
@@ -26,13 +28,12 @@
 			  </li>
 			</ul>
 			<div class="tab-content" id="myTabContent">
-			  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">Home</div>
-			  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">Profile</div>
-			  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">Contact</div>
+			  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">Home Content here!!!</div>
+			  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">Profile Content Here!!!!</div>
+			  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">Contact Content Here</div>
 			</div>
-					
-			<hr />
-				
+		</div>
+
 			<div class="accordion" id="accordionExample">
 			  <div class="card">
 				<div class="card-header" id="headingOne">
@@ -79,13 +80,18 @@
 			  </div>
 			</div>		
 		</div>
-		
-		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	</div>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 		<script src="scripts/summernote-bs4.js"></script>
 		<script src="scripts/custombuttons.js"></script>
-		<script src="scripts/plugins.js"></script>
+		<script src="scripts/plugins/accordion.js"></script>
+		<script src="scripts/plugins/tabs.js"></script>
+		<script src="scripts/plugins/filebrowser.js"></script>
+		<script src="scripts/plugins/imagebrowser.js"></script>
+
 		<script>
 			$(document).ready(function() {
 			  $('#summernote').summernote({
@@ -96,9 +102,9 @@
                     ['color', ['color']],
                     ['para', ['ul', 'ol', 'paragraph']],
                     ['table', ['table']],
-                    ['insert', ['link', 'imagebrowser', 'youtubebrowser', 'filebrowser']],
+                    ['insert', ['link', 'imagebrowser', 'youtubebrowser', 'filebrowser', 'accordion']],
                     ['view', ['fullscreen', 'codeview', 'help']],
-                    ['savecancel', ['cancel', 'save']]
+										['savecancel', ['cancel', 'save']]
                 ],
                 codemirror: {
                     theme: 'monokai',
