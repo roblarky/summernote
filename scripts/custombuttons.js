@@ -56,44 +56,4 @@
 
         return button.render();
     }
-    /*
-    function summernoteImageButton (context) {
-        var ui = $.summernote.ui;
-        var button = ui.button({
-            contents: '<i class="fas fa-image"/> Image',
-            title: 'Image',
-            container: false,
-            tooltip: 'Image',
-            click: function () {
-                //context.invoke('editor.destroy');
-                $('.tooltip').tooltip('hide');
-                alert('Show image library modal here');
-                //TODO: (CMS) Update page contents?
-                $("#caImageBrowser").modal('show');
-                //context.destroy();
-            }
-        });
-
-        return button.render();
-    }
-
-    function summernoteVideoButton (context) {
-        var ui = $.summernote.ui;
-        var button = ui.button({
-            contents: '<i class="fas fa-video"/> Video',
-            title: 'Video',
-            container: false,
-            tooltip: 'Video',
-            click: function () {
-                //context.invoke('editor.destroy');
-                $('.tooltip').tooltip('hide');
-                alert('Show Video modal here');
-                //TODO: (CMS) Update page contents?
-                //context.destroy();
-            }
-        });
-
-        return button.render();
-    }
-    */
 //}));
