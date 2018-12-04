@@ -12,35 +12,45 @@
     }
 }(function ($) {
     $.extend($.summernote.plugins, {
-        'cancel': function(context){
+        'cancel': function (context) {
             var self = this,
                 modalElement,
-                ui = $.summernote.ui;
+                context = context,
+                ui = $.summernote.ui,
+                options = context.options,
+                $editor = context.layoutInfo.editor,
+                $editable = context.layoutInfo.editable;
 
-                context.memo('button.cancel', function () {
-                    var button = ui.button({
-					contents: '<i class="fa fa-times"/> Cancel',
-					title: 'Cancel',
-					container: false,
-					tooltip: 'Cancel edit',
-					click: function () {
-						if(editorDirty) {
-							if(!confirm('Are you sure you want to cancel and lose any changes?')) return;
-						}
-						//context.invoke('editor.destroy');
-						$('#summernote').find("[id]").each(function() {
-							this.id = this.id.replace('SUMMERNOTETEMPIDAPPEND','');
-						})
-						$('.tooltip').tooltip('hide');
-						//context.invoke('editor.destroy'); //TODO why is context undefined here?
-						$('#summernote').summernote('reset');
-						$('#summernote').summernote('destroy');
-						editorDirty = false;
-					}
-                        });
-    
-                    return button.render();
-                });    
+            context.memo('button.cancel', function () {
+                var button = ui.button({
+                    contents: '<i class="fa fa-times"/> Cancel',
+                    title: 'Cancel',
+                    container: false,
+                    tooltip: 'Cancel edit',
+                    click: function () {
+                        if (editorDirty) {
+                            if (!confirm('Are you sure you want to cancel and lose any changes?')) 
+                                return;
+                            }
+                        //context.invoke('editor.destroy');
+                        context.$note
+                            .find("[id]")
+                            .each(function () {
+                                this.id = this
+                                    .id
+                                    .replace('SUMMERNOTETEMPIDAPPEND', '');
+                            })
+                        $('.tooltip').tooltip('hide');
+                        //context.$note.summernote('reset');
+                        //context.$note.summernote('destroy');
+                        context.reset();
+                        context.destroy();
+                        editorDirty = false;
+                    }
+                });
+
+                return button.render();
+            });
         }
     });
 }));

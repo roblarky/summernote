@@ -64,9 +64,9 @@
                     lineNumbers: true
                 },
 				callbacks: {
-					onInit: function() {
-						console.log('Summernote is launched');
-						$('#summernote').find("[id]").each(function() {
+					onInit: function(e) {
+						//console.log('Summernote is launched');
+						e.note.find("[id]").each(function() {
 							this.id = this.id + 'SUMMERNOTETEMPIDAPPEND';
 						})
 					},

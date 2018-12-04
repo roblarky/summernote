@@ -12,33 +12,35 @@
     }
 }(function ($) {
     $.extend($.summernote.plugins, {
-        'save': function(context){
+        'save': function (context) {
             var self = this,
                 modalElement,
-                ui = $.summernote.ui;
+                context = context,
+                ui = $.summernote.ui,
+                options = context.options,
+                $editor = context.layoutInfo.editor,
+                $editable = context.layoutInfo.editable;
 
-                context.memo('button.save', function () {
-                    var button = ui.button({
-						contents: '<i class="fa fa-save"/> Save',
-						title: 'Save',
-						container: false,
-						tooltip: 'Save Changes',
-						click: function () {
-							//context.invoke('editor.destroy');
-							$('.tooltip').tooltip('hide');
-							//alert('POST save changes here');
-							//TODO: (CMS) Update page contents?
-							//console.log(context.code());
-							console.log($('#summernote').summernote('code'));
-							//context.destroy(); //TODO why is context undefined here?
-							//$('#summernote').html($('#summernote').summernote('code'));
-							$('#summernote').summernote('destroy');
-							editorDirty = false;
-						}
-                        });
-    
-                    return button.render();
-                });    
+            context.memo('button.save', function () {
+                var button = ui.button({
+                    contents: '<i class="fa fa-save"/> Save',
+                    title: 'Save',
+                    container: false,
+                    tooltip: 'Save Changes',
+                    click: function () {
+                        //alert('POST save changes here');
+                        //TODO: (CMS) Update page contents? console.log(context.code());
+                        //console.log(context.$note.summernote('code'));
+                        console.log(context.code());
+                        //context.$note.summernote('destroy');
+                        context.destroy();
+                        $('.tooltip').tooltip('hide');
+                        editorDirty = false;
+                    }
+                });
+
+                return button.render();
+            });
         }
     });
 }));
