@@ -137,7 +137,7 @@
 
                     //Create dialog
                     this.$dialog = ui
-                        .dialog({title: "Insert Tabs", fade: options.dialogsFade, body: body, footer: footer})
+                        .dialogLarge({title: "Insert Tabs", fade: options.dialogsFade, body: body, footer: footer})
                         .render()
                         .appendTo($container);
 

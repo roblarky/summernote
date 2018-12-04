@@ -141,7 +141,7 @@
 
                     //Create dialog
                     this.$dialog = ui
-                        .dialog({title: "Insert Accordion", fade: options.dialogsFade, body: body, footer: footer})
+                        .dialogLarge({title: "Insert Accordion", fade: options.dialogsFade, body: body, footer: footer})
                         .render()
                         .appendTo($container);
 

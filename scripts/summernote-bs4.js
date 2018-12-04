@@ -5,7 +5,7 @@
  * Copyright 2013- Alan Hong. and other contributors
  * summernote may be freely distributed under the MIT license.
  *
- * Date: 2018-11-30T20:57Z
+ * Date: 2018-12-04T17:14Z
  */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('jquery')) :
@@ -167,6 +167,28 @@
           '</div>',
       ].join(''));
   });
+  var dialogLarge = renderer.create('<div class="modal" aria-hidden="false" tabindex="-1" role="dialog"/>', function ($node, options) {
+      if (options.fade) {
+          $node.addClass('fade');
+      }
+      $node.attr({
+          'aria-label': options.title
+      });
+      $node.html([
+          '<div class="modal-dialog modal-lg">',
+          '  <div class="modal-content">',
+          (options.title
+              ? '    <div class="modal-header">' +
+                  '      <h4 class="modal-title">' + options.title + '</h4>' +
+                  '      <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">&times;</button>' +
+                  '    </div>' : ''),
+          '    <div class="modal-body">' + options.body + '</div>',
+          (options.footer
+              ? '    <div class="modal-footer">' + options.footer + '</div>' : ''),
+          '  </div>',
+          '</div>',
+      ].join(''));
+  });
   var popover = renderer.create([
       '<div class="note-popover popover in">',
       '  <div class="arrow"/>',
@@ -208,6 +230,7 @@
       dropdownCheck: dropdownCheck,
       palette: palette,
       dialog: dialog,
+      dialogLarge: dialogLarge,
       popover: popover,
       icon: icon,
       checkbox: checkbox,
@@ -244,6 +267,18 @@
       },
       hideDialog: function ($dialog) {
           $dialog.modal('hide');
+      },
+      onDialogLargeShown: function ($dialogLarge, handler) {
+          $dialogLarge.one('shown.bs.modal', handler);
+      },
+      onDialogLargeHidden: function ($dialogLarge, handler) {
+          $dialogLarge.one('hidden.bs.modal', handler);
+      },
+      showDialogLarge: function ($dialogLarge) {
+          $dialogLarge.modal('show');
+      },
+      hideDialogLarge: function ($dialogLarge) {
+          $dialogLarge.modal('hide');
       },
       createLayout: function ($note, options) {
           var $editor = (options.airMode ? ui.airEditor([
