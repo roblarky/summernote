@@ -364,10 +364,12 @@
                                         .$dialog
                                         .find('.form-control');
                                     for (var i = 0; i < $formInput.length; i = i + 2) {
-                                        data.push({
-                                            title: $formInput[i].value,
-                                            content: $formInput[i + 1].value
-                                        });
+                                        if($formInput[i].value){
+                                            data.push({
+                                                title: $formInput[i].value,
+                                                content: $formInput[i + 1].value
+                                            });
+                                        }
                                     }
                                     deferred.resolve(data);
                                 });
