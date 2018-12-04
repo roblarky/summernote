@@ -156,6 +156,7 @@
               //Create logic for Add button and Delete button
               var $addBtn = self.$dialog.find('#add-tab')
                   .click(function (event) {
+                      console.log('tabs: addBtn.click');
                       event.preventDefault();
                       $addBtn.before(tabInput);
                       var $deleteBtn = self.$dialog.find('.fa-close')
@@ -326,7 +327,9 @@
                   //Add resolve to insert button
                   var $insertBtn = self.$dialog.find('#insert-tab');
                   context.triggerEvent('dialog.shown');
+                  $insertBtn.off('click');
                   $insertBtn.click(function (event) {
+                    console.log('tabs: insertBtn.click');
                     event.preventDefault();
                     // Get user data
                     var data = [];
@@ -342,12 +345,12 @@
                 });
         
                 ui.onDialogHidden(self.$dialog, function () {
-				  console.log('tabs::onDialogHidden');
-                  // Remove panel
-                  var $tabPanel = self.$dialog.find('.card');
-                  for (var i = 0; i < $tabPanel.length; i++) {
-                    $tabPanel[i].remove();
-                  }
+				    console.log('tabs::onDialogHidden');
+                    // Remove panel
+                    var $tabPanel = self.$dialog.find('.card');
+                    for (var i = 0; i < $tabPanel.length; i++) {
+                        $tabPanel[i].remove();
+                    }
                 });
 				const rng = context.invoke('getLastRange');
 				let nodes = rng.nodes();

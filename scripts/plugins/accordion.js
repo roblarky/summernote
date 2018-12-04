@@ -181,7 +181,6 @@
             };
         
 			this.moveSectionUp = function(){
-				console.log('accordion: moveSectionUp');		
 				let currentSection = $(this.nodes[0]).closest('.card').get(0); 
 				let previousSection = currentSection.previousElementSibling;
 				if(previousSection) {
@@ -198,7 +197,6 @@
 			}	
 			
 			this.moveSectionDown = function(){
-				console.log('accordion: moveSectionDown');		
 				let currentSection = $(this.nodes[0]).closest('.card').get(0); 
 				let nextSection = currentSection.nextElementSibling;
 				if(nextSection) {
@@ -215,7 +213,6 @@
 			}	
 
 			this.addSection = function() {
-				console.log('accordion: addSection');
 				let currentSection = $(this.nodes[0]).closest('.card').get(0); 
 				let accordionContainer = currentSection.parentNode;
 				var newSection = document.createElement('div');
@@ -241,7 +238,6 @@
 			
 			this.removeSection = function(){
 				//Current tab
-				console.log('accordion: removeSection');
 				let currentSection = $(this.nodes[0]).closest('.card').get(0); 
 				let accordionContainer = currentSection.parentNode;
 				let previousSection = currentSection.previousElementSibling;
@@ -260,38 +256,38 @@
 				}
 			}		
 		
-            this.showDialog = function () {
-              context.invoke('editor.saveRange');
+      this.showDialog = function () {
+        context.invoke('editor.saveRange');
 
-              this.showAccordionDialog().then(function (data) {
+        this.showAccordionDialog().then(function (data) {
 				const rng = context.invoke('getLastRange');
 				let nodes = rng.nodes();
-                // [workaround] hide dialog before restore range for IE range focus
-                ui.hideDialog(self.$dialog);
-                context.invoke('editor.restoreRange');
-      
-                //Create accordion
-                if (data.length > 0) {
-                  var accordionId = "accordion" + new Date().getTime();
-                  var toInsert = '<div class="accordion accordion-container" id="' + accordionId + '">';
-                  for (var i = 0; i < data.length; i++) {
-                    var myId = accordionId + (i + 1);
-                    toInsert += '<div class="card">';
-                    toInsert += '<div class="card-header" id="' + myId + 'Header">';
-                    toInsert += '<h4 class="panel-title">';
-                    toInsert += '<button class="btn btn-link" data-toggle="collapse" data-parent="#' + accordionId + '" data-target="#' + myId + '" href="#' + myId + '" aria-expanded="true" aria-controls="' + myId + '">' + data[i].title + '</button>';
-                    toInsert += '</h4>';
-                    toInsert += '</div>';
-                    toInsert += '<div id="' + myId + '" class="panel-collapse collapse in" aria-labelledby="' + myId + 'Header" data-parent="#' + accordionId + '">';
-                    toInsert += '<div class="card-body">';
-                    toInsert += '<p>' + data[i].content + '</p>';
-                    toInsert += '</div>';
-                    toInsert += '</div>';
-                    toInsert += '</div>';
-                  }
-                  toInsert += '</div>';
-                  var div = document.createElement('div');
-                  div.innerHTML = toInsert;
+        // [workaround] hide dialog before restore range for IE range focus
+        ui.hideDialog(self.$dialog);
+        context.invoke('editor.restoreRange');
+
+        //Create accordion
+        if (data.length > 0) {
+          var accordionId = "accordion" + new Date().getTime();
+          var toInsert = '<div class="accordion accordion-container" id="' + accordionId + '">';
+          for (var i = 0; i < data.length; i++) {
+            var myId = accordionId + (i + 1);
+            toInsert += '<div class="card">';
+            toInsert += '<div class="card-header" id="' + myId + 'Header">';
+            toInsert += '<h4 class="panel-title">';
+            toInsert += '<button class="btn btn-link" data-toggle="collapse" data-parent="#' + accordionId + '" data-target="#' + myId + '" href="#' + myId + '" aria-expanded="true" aria-controls="' + myId + '">' + data[i].title + '</button>';
+            toInsert += '</h4>';
+            toInsert += '</div>';
+            toInsert += '<div id="' + myId + '" class="panel-collapse collapse in" aria-labelledby="' + myId + 'Header" data-parent="#' + accordionId + '">';
+            toInsert += '<div class="card-body">';
+            toInsert += '<p>' + data[i].content + '</p>';
+            toInsert += '</div>';
+            toInsert += '</div>';
+            toInsert += '</div>';
+          }
+          toInsert += '</div>';
+          var div = document.createElement('div');
+          div.innerHTML = toInsert;
 				  if(nodes.length > 1) {
 					  alert('More than 1 node selected.');
 				  } else if($(nodes[0]).closest('.tab-pane').length || $(nodes[0]).closest('.card-body').length) {
@@ -316,7 +312,9 @@
                   //Add resolve to insert button
                   var $insertBtn = self.$dialog.find('#insert-accordion');
                   context.triggerEvent('dialog.shown');
+                  $insertBtn.off('click');
                   $insertBtn.click(function (event) {
+                    console.log('accordion: insertBtn.click');
                     event.preventDefault();
                     // Get user data
                     var data = [];
