@@ -5,7 +5,7 @@
  * Copyright 2013- Alan Hong. and other contributors
  * summernote may be freely distributed under the MIT license.
  *
- * Date: 2018-12-04T17:14Z
+ * Date: 2018-12-04T17:50Z
  */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('jquery')) :
@@ -267,18 +267,6 @@
       },
       hideDialog: function ($dialog) {
           $dialog.modal('hide');
-      },
-      onDialogLargeShown: function ($dialogLarge, handler) {
-          $dialogLarge.one('shown.bs.modal', handler);
-      },
-      onDialogLargeHidden: function ($dialogLarge, handler) {
-          $dialogLarge.one('hidden.bs.modal', handler);
-      },
-      showDialogLarge: function ($dialogLarge) {
-          $dialogLarge.modal('show');
-      },
-      hideDialogLarge: function ($dialogLarge) {
-          $dialogLarge.modal('hide');
       },
       createLayout: function ($note, options) {
           var $editor = (options.airMode ? ui.airEditor([

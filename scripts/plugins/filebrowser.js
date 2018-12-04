@@ -17,7 +17,20 @@
             var self = this,
                 modalElement,
                 ui = $.summernote.ui;
-
+            if (!modalElement) {
+                modalElement = $('<div>').addClass("modal fade")
+                    .append($("<div>").addClass("modal-dialog modal-lg")
+                        .append($("<div>").addClass("modal-content")));
+                modalElement
+                    .attr({
+                        id: 'summernoteFileBrowserModal',
+                        tabindex: "-1",
+                        role: "dialog",
+                        'aria-hidden': true,
+                        'z-index': "1100"
+                    });
+                modalElement.appendTo('body');
+            }
             context.memo('button.filebrowser', function () {
                 var button = ui.button({
                     contents: '<i class="fa fa-file"/> File',
@@ -27,19 +40,6 @@
                     click: function () {
                         activeEditorContext = context;
                         context.invoke('saveRange');
-                        if (!modalElement) {
-                            modalElement = $('<div>').addClass("modal fade")
-                                .append($("<div>").addClass("modal-dialog modal-lg")
-                                    .append($("<div>").addClass("modal-content")));
-                            modalElement
-                                .attr({
-                                    id: 'summernoteModal',
-                                    tabindex: "-1",
-                                    role: "dialog",
-                                    'aria-hidden': true
-                                });
-                            modalElement.appendTo('body');
-                        }
                         $.get("/Admin/ContentEditor/_FileBrowserModalContent", function (data) {
                             $(".modal-content", modalElement).html(data);
                             modalElement.off("shown.bs.modal");
