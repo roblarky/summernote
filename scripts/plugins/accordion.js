@@ -130,14 +130,12 @@
                     var $container = options.dialogsInBody
                             ? $(document.body)
                             : context.layoutInfo.editor,
-                        body = '<button href="#" class="btn btn-primary" id="add-accordion">Add Accordion</butto' +
-                                'n>',
+                        body = '<div class="container"><div class="row flex-nowrap" id="accordionGroupContainer" style="overflow-x: auto;white-space: nowrap;"></div></div><div class="pt-2"><button href="#" class="btn btn-primary" id="add-accordion">Add Section</button></div>',
                         footer = '<button href="#" class="btn btn-primary" id="insert-accordion">Insert Accordion<' +
                                 '/button>',
-                        accordionInput = '<div class="card"><div class="card-body"><i class="fa fa-close pull-right" aria-' +
-                                'hidden="true"></i><div class="form-group"><label>Accordion Title</label><input c' +
-                                'lass="form-control" type="text" /></div><div class="form-group"><label>Accordion' +
-                                ' Content</label><textarea class="form-control" rows="4" /></div></div></div>';
+                        accordionInput = '<div class="card col-sm-5" style="display: inline-block;float: none;"><div class="card-body"><i class="fa fa-close pull-right" aria-' +
+                                'hidden="true"></i><div class="form-group"><label>Heading</label><input c' +
+                                'lass="form-control" type="text" /></div><div class="form-group"><label>Content</label><textarea class="form-control" rows="4" /></div></div></div>';
 
                     //Create dialog
                     this.$dialog = ui
@@ -151,7 +149,11 @@
                         .find('#add-accordion')
                         .click(function (event) {
                             event.preventDefault();
-                            $addBtn.before(accordionInput);
+                            //$addBtn.before(accordionInput);
+                            $('#accordionGroupContainer').append(accordionInput);
+                            let far = $('#accordionGroupContainer').width();
+                            let pos = $('#accordionGroupContainer').scrollLeft() + far;
+                            $('#accordionGroupContainer').animate( { scrollLeft: pos }, 500 );                            
                             var $deleteBtn = self
                                 .$dialog
                                 .find('.fa-close')

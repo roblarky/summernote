@@ -32,6 +32,7 @@
                     click: function () {
                         activeEditorContext = context;
                         context.invoke('saveRange');
+                        modalElement.attr('data-target-field', '#youtubeBrowserUrl');
                         $.get("/Admin/ContentEditor/_YouTubeBrowserModalContent", function (data) {
                             $(".modal-content", modalElement).html(data);
                             modalElement.off("shown.bs.modal");

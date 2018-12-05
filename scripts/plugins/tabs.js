@@ -128,9 +128,9 @@
                     var $container = options.dialogsInBody
                             ? $(document.body)
                             : context.layoutInfo.editor,
-                        body = '<button href="#" class="btn btn-primary" id="add-tab">Add Tab</button>',
+                        body = '<div class="container"><div class="row flex-nowrap" id="tabGroupContainer" style="overflow-x: auto;white-space: nowrap;"></div></div><div class="pt-2"><button href="#" class="btn btn-primary" id="add-tab">Add Tab</button></div>',
                         footer = '<button href="#" class="btn btn-primary" id="insert-tab">Insert Tabs</button>',
-                        tabInput = '<div class="card"><div class="card-body"><i class="fa fa-close pull-right" aria-' +
+                        tabInput = '<div class="card col-sm-5" style="display: inline-block;float: none;"><div class="card-body"><i class="fa fa-close pull-right" aria-' +
                                 'hidden="true"></i><div class="form-group"><label>Tab Title</label><input class="' +
                                 'form-control" type="text" /></div><div class="form-group"><label>Tab Content</la' +
                                 'bel><textarea class="form-control" rows="4" /></div></div></div>';
@@ -148,7 +148,11 @@
                         .click(function (event) {
                             console.log('tabs: addBtn.click');
                             event.preventDefault();
-                            $addBtn.before(tabInput);
+                            //$addBtn.before(tabInput);
+                            $('#tabGroupContainer').append(tabInput);
+                            let far = $('#tabGroupContainer').width();
+                            let pos = $('#tabGroupContainer').scrollLeft() + far;
+                            $('#tabGroupContainer').animate( { scrollLeft: pos }, 500 );
                             var $deleteBtn = self
                                 .$dialog
                                 .find('.fa-close')

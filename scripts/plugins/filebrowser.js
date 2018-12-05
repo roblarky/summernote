@@ -40,6 +40,7 @@
                     click: function () {
                         activeEditorContext = context;
                         context.invoke('saveRange');
+                        modalElement.attr('data-target-field', '#fileBrowserUrl');
                         $.get("/Admin/ContentEditor/_FileBrowserModalContent", function (data) {
                             $(".modal-content", modalElement).html(data);
                             modalElement.off("shown.bs.modal");

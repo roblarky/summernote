@@ -130,16 +130,8 @@
                     var $container = options.dialogsInBody
                             ? $(document.body)
                             : context.layoutInfo.editor,
-                        body = '<button href="#" class="btn btn-primary" id="add-image">Add Image</button> <button href="#" class="btn btn-primary" id="add-video">Add Video</button>',
-                        footer = '<button href="#" class="btn btn-primary" id="insert-slider">Insert Slider</button>',
-                        imageInput = '<div class="card"><div class="card-body"><i class="fa fa-close pull-right" aria-' +
-                                'hidden="true"></i><div class="form-group"><label>Image Title</label><input class="' +
-                                'form-control" type="text" /></div><div class="form-group"><label>Slide Content</la' +
-                                'bel><textarea class="form-control" rows="4" /></div></div></div>',
-                        videoInput = '<div class="card"><div class="card-body"><i class="fa fa-close pull-right" aria-' +
-                                'hidden="true"></i><div class="form-group"><label>Video Title</label><input class="' +
-                                'form-control" type="text" /></div><div class="form-group"><label>Slide Content</la' +
-                                'bel><textarea class="form-control" rows="4" /></div></div></div>';                                
+                        body = '<div class="container"><div class="row flex-nowrap" id="sliderGroupContainer" style="overflow-x: auto;white-space: nowrap;"></div></div><div class="pt-2"><button href="#" class="btn btn-primary" id="add-image">Add Image</button> <button href="#" class="btn btn-primary" id="add-video">Add Video</button></div>',
+                        footer = '<button href="#" class="btn btn-primary" id="insert-slider">Insert Slider</button>';                             
 
                     //Create dialog
                     this.$dialog = ui
@@ -151,23 +143,43 @@
                     var $addImage = self
                         .$dialog
                         .find('#add-image')
+                        .off('click')
                         .click(function (event) {
                             console.log('slider: addImage.click');
                             event.preventDefault();
-                            $addImage.before(imageInput);
+                            let imageInputId = 'newImageSlide' + new Date().getTime();
+                            let imageInput = '<div class="card col-sm-5" style="display: inline-block;float: none;">';
+                            imageInput += '<div class="card-body">';
+                            imageInput += '   <i class="fa fa-close pull-right" aria-hidden="true"></i>';
+                            imageInput += '   <div class="form-group">';
+                            imageInput += '      <label>Image Title</label>';
+                            imageInput += '      <input class="form-control" id="' + imageInputId + '" type="text" />';
+                            imageInput += '   </div>';
+                            imageInput += '   <div class="form-group">';
+                            imageInput += '      <label>Slide Content</label>';
+                            imageInput += '      <textarea class="form-control" rows="4" />';
+                            imageInput += '   </div>';
+                            imageInput += '</div></div>'                            
+                            $('#summernoteImageBrowserModal').attr('data-target-field', '#' + imageInputId);                            
+                            //$addImage.before(imageInput);
+                            $('#sliderGroupContainer').append(imageInput);
+                            let far = $('#sliderGroupContainer').width();
+                            let pos = $('#sliderGroupContainer').scrollLeft() + far;
+                            $('#sliderGroupContainer').animate( { scrollLeft: pos }, 500 );                            
                             //$.get("/Admin/ContentEditor/_ImageBrowserModalContent", function (data) {
                             //    $(".modal-content", '#summernoteImageBrowserModal').html(data);
-                                $(".modal-content", '#summernoteImageBrowserModal').html('Test Image Browser HTML'); //test only, uncomment wrapped area
+                                $(".modal-content", '#summernoteImageBrowserModal').html('Test Image Browser HTML<button onclick="$(\'#' + imageInputId + '\').val(\'test image val\');">test</button>'); //test only, uncomment wrapped area
                                 $('#summernoteImageBrowserModal').off("shown.bs.modal");
                                 $('#summernoteImageBrowserModal').on("shown.bs.modal", function () {
                                     console.log("Slider Image Browser: shown.bs.modal");
-                                    $(document).trigger("editor.sliderimagebrowser.ready"); //TODO bind this in admin.js to handle slider insert fields
+                                    $(document).trigger("editor.imagebrowser.ready"); //TODO bind this in admin.js to handle slider insert fields
                                 });
                                 $('#summernoteImageBrowserModal').modal('show');
                             //});                            
                             var $deleteBtn = self
                                 .$dialog
                                 .find('.fa-close')
+                                .off('click')
                                 .click(function (event) {
                                     event.preventDefault();
                                     event
@@ -181,23 +193,43 @@
                         var $addVideo = self
                         .$dialog
                         .find('#add-video')
+                        .off('click')
                         .click(function (event) {
                             console.log('slider: addVideo.click');
                             event.preventDefault();
-                            $addImage.before(videoInput);
+                            let videoInputId = 'newVideoSlide' + new Date().getTime();
+                            let videoInput = '<div class="card col-sm-5" style="display: inline-block;float: none;">';
+                            videoInput += '<div class="card-body">';
+                            videoInput += '   <i class="fa fa-close pull-right" aria-hidden="true"></i>';
+                            videoInput += '   <div class="form-group">';
+                            videoInput += '      <label>Video Title</label>';
+                            videoInput += '      <input class="form-control" id="' + videoInputId + '" type="text" />';
+                            videoInput += '   </div>';
+                            videoInput += '   <div class="form-group">';
+                            videoInput += '      <label>Slide Content</label>';
+                            videoInput += '      <textarea class="form-control" rows="4" />';
+                            videoInput += '   </div>';
+                            videoInput += '</div></div>'                            
+                            $('#summernoteYouTubeBrowserModal').attr('data-target-field', '#' + videoInputId);
+                            //$addImage.before(videoInput);
+                            $('#sliderGroupContainer').append(videoInput);
+                            let far = $('#sliderGroupContainer').width();
+                            let pos = $('#sliderGroupContainer').scrollLeft() + far;
+                            $('#sliderGroupContainer').animate( { scrollLeft: pos }, 500 );                            
                             //$.get("/Admin/ContentEditor/_YouTubeBrowserModalContent", function (data) {
                             //    $(".modal-content", '#summernoteYouTubeBrowserModal').html(data);
-                                $(".modal-content", '#summernoteYouTubeBrowserModal').html('Test Image Browser HTML'); //test only, uncomment wrapped area
+                                $(".modal-content", '#summernoteYouTubeBrowserModal').html('Test Image Browser HTML<button onclick="$(\'#' + videoInputId + '\').val(\'test video val\');">test</button>'); //test only, uncomment wrapped area
                                 $('#summernoteYouTubeBrowserModal').off("shown.bs.modal");
                                 $('#summernoteYouTubeBrowserModal').on("shown.bs.modal", function () {
                                     console.log("Slider YouTube Browser: shown.bs.modal");
-                                    $(document).trigger("editor.slideryoutubebrowser.ready"); //TODO bind this in admin.js to handle slider insert fields
+                                    $(document).trigger("editor.youtubebrowser.ready"); //TODO bind this in admin.js to handle slider insert fields
                                 });
                                 $('#summernoteYouTubeBrowserModal').modal('show');
                             //});                             
                             var $deleteBtn = self
                                 .$dialog
                                 .find('.fa-close')
+                                .off('click')
                                 .click(function (event) {
                                     event.preventDefault();
                                     event
