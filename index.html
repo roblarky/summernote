@@ -14,10 +14,6 @@
 		<div class="container">
 		<div id="summernote">
 
-		
-
-		
-	
 		</div>
 		<div><button onclick="initeditor();">Editor</button></div>
 	</div>
@@ -25,7 +21,8 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-		<script src="scripts/summernote-bs4.js"></script>
+        <script src="scripts/summernote-bs4.js"></script>
+        <script src="scripts/plugins/layouts.js"></script>
 		<script src="scripts/plugins/tabs.js"></script>
 		<script src="scripts/plugins/accordion.js"></script>
 		<script src="scripts/plugins/filebrowser.js"></script>
@@ -36,7 +33,6 @@
 		<script src="scripts/plugins/cancel.js"></script>
 
 		<script>
-			//$(document).ready(function() {
 			var editorDirty = false;
 			function initeditor() {
 			  $('#summernote').summernote({
@@ -47,18 +43,39 @@
                     ['color', ['color']],
                     ['para', ['ul', 'ol', 'paragraph']],
                     ['table', ['table']],
-                    ['insert', ['link', 'imagebrowser', 'youtubebrowser', 'filebrowser', 'sliderDialog', 'tabDialog', 'accordionDialog']],
+                    ['insert', ['layoutDialog', 'tabDialog', 'accordionDialog','sliderDialog','link', 'imagebrowser', 'youtubebrowser', 'filebrowser']],
                     ['view', ['fullscreen', 'codeview', 'help']],
 										['savecancel', ['cancel', 'save']]
                 ],
+                popatmouse: true,
 				popover: {
 					tabs: [
 						['tabs', ['tabhidepopover', 'tableft', 'tabright', 'addtab', 'removetab']]
 					],
 					accordion: [
 						['accordion', ['accordionhidepopover', 'accordionup', 'accordiondown', 'addaccordion', 'removeaccordion']]
-					]					
-				},
+                    ],
+                    image: [
+                        ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+                        ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                        ['remove', ['removeMedia']],
+                    ],
+                    link: [
+                        ['link', ['linkDialogShow', 'unlink']],
+                    ],
+                    table: [
+                        ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                        ['delete', ['deleteRow', 'deleteCol', 'deleteTable']],
+                    ],
+                    air: [
+                        ['color', ['color']],
+                        ['font', ['bold', 'underline', 'clear']],
+                        ['para', ['ul', 'paragraph']],
+                        ['table', ['table']],
+                        ['insert', ['link', 'picture']],
+                    ]				
+                },
+                airMode: false,
                 codemirror: {
                     theme: 'monokai',
                     lineWrapping: true,
@@ -66,7 +83,13 @@
                 },
 				callbacks: {
 					onInit: function(e) {
-						//console.log('Summernote is launched');
+                        //console.log('Summernote is launched');
+                        /*if(!$.trim( $(e.note).html() ).length) {
+                            $(e.note).html('<p></p>');
+                            $(e.editable).html('<p></p>');
+                        }*/
+                        //$(e.note).summernote('editor.getLastRange');
+                        $(e.note).summernote('focus');
 						e.note.find("[id]").each(function() {
 							this.id = this.id + 'SUMMERNOTETEMPIDAPPEND';
 						})
@@ -78,7 +101,6 @@
 				}
             });
 			}
-			//});
 
 		</script>
 	</body>

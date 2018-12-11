@@ -33,10 +33,10 @@
             }
             context.memo('button.filebrowser', function () {
                 var button = ui.button({
-                    contents: '<i class="fa fa-file"/> File',
+                    contents: '<i class="fa fa-file"/>',
                     title: 'File',
                     container: false,
-                    tooltip: 'File Browser',
+                    tooltip: 'Insert File',
                     click: function () {
                         activeEditorContext = context;
                         context.invoke('saveRange');

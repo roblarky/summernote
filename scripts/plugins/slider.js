@@ -29,9 +29,9 @@
                     var button = this
                         .ui
                         .button({
-                            contents: '<i class="fa fa-images"/> Slider',
+                            contents: '<i class="fa fa-film"/>',
                             container: false,
-                            tooltip: "Insert a new slider",
+                            tooltip: "Insert a new slideshow",
                             click: function () {
                                 self.showDialog();
                             }
@@ -41,76 +41,22 @@
                     return button.render();
                 });
 
-                /*
-                context.memo('button.addtab', function () {
+                /* This is a template for popover button, would need to also add entry to summernote options
+                context.memo('button.uniquebtnname', function () {
                     // create button
                     var button = ui.button({
                         contents: '<i class="fa fa-plus"/>',
                         container: false,
-                        tooltip: "Insert new tab to the right",
+                        tooltip: "",
                         click: function () {
-                            self.addTab();
-                            self.hide();
-                        }
-                    });
-                    return button.render();
-                });
-
-                context.memo('button.removetab', function () {
-                    // create button
-                    var button = ui.button({
-                        contents: '<i class="fa fa-trash"/>',
-                        container: false,
-                        tooltip: "Delete tab",
-                        click: function () {
-                            if (confirm('Are you sure you want to remove this tab?')) {
-                                self.removeTab();
-                                self.hide();
-                            }
-                        }
-                    });
-                    return button.render();
-                });
-
-                context.memo('button.tableft', function () {
-                    // create button
-                    var button = ui.button({
-                        contents: '<i class="fa fa-chevron-left"/>',
-                        container: false,
-                        tooltip: "Move tab to the left",
-                        click: function () {
-                            self.moveTabLeft();
-                        }
-                    });
-                    return button.render();
-                });
-
-                context.memo('button.tabright', function () {
-                    // create button
-                    var button = ui.button({
-                        contents: '<i class="fa fa-chevron-right"/>',
-                        container: false,
-                        tooltip: "Move tab to the right",
-                        click: function () {
-                            self.moveTabRight();
-                        }
-                    });
-                    return button.render();
-                });
-
-                context.memo('button.tabhidepopover', function () {
-                    // create button
-                    var button = ui.button({
-                        contents: '<i class="fa fa-times"/>',
-                        container: false,
-                        tooltip: "Hide Popup",
-                        click: function () {
+                            self.addTab(); //change to function name when defined, e.g. this.newFunction, to fire on popover button click
                             self.hide();
                         }
                     });
                     return button.render();
                 });
                 */
+
 
                 this.events = {
                     // This will be called after modules are initialized.
@@ -130,7 +76,61 @@
                     var $container = options.dialogsInBody
                             ? $(document.body)
                             : context.layoutInfo.editor,
-                        body = '<div class="container"><div class="row flex-nowrap" id="sliderGroupContainer" style="overflow-x: auto;white-space: nowrap;"></div></div><div class="pt-2"><button href="#" class="btn btn-primary" id="add-image">Add Image</button> <button href="#" class="btn btn-primary" id="add-video">Add Video</button></div>',
+                        body = '<div class="container">' +
+                               '  <div class="row flex-nowrap" id="sliderGroupContainer" style="overflow-x: auto;white-space: nowrap;"></div>' + 
+                               '</div>' +
+                               '<div class="pt-2 pb-2">' +
+                               '  <button href="#" class="btn btn-primary" id="add-image">Add Image</button> ' +
+                               '  <button href="#" class="btn btn-primary" id="add-video">Add Video</button>' +
+                               '</div>' +
+                               '<div class="card" id="sliderMainCard"><div class="card-body">' +
+                               '  <div class="row">' +
+                               '    <div class="col-md-6 form-group">' +
+                               '      <label>Location</label>' +
+                               '      <select class="form-control" id="sliderLocation">' +
+                               '          <option value="center top">Center Top</option>' +
+                               '          <option value="center middle" selected="selected">Center Middle</option>' +
+                               '          <option value="center bottom">Center Bottom</option>' +
+                               '          <option value="left top">Left Top</option>' +
+                               '          <option value="left middle">Left Middle</option>' +
+                               '          <option value="left bottom">Left Bottom</option>' +
+                               '          <option value="right top">Right Top</option>' +
+                               '          <option value="right middle">Right Middle</option>' +
+                               '          <option value="right bottom">Right Bottom</option>' +
+                               '      </select>' +
+                               '    </div>' +    
+                               '    <div class="col-md-6 form-group">' +
+                               '      <label>Height</label>' +
+                               '      <input class="form-control" id="sliderHeight" type="number" value="500" step="25" />' +
+                               '    </div>' +
+                               '  </div>' +
+                               '  <div class="row">' +
+                               '    <div class="col-md-6 form-group">' +
+                               '      <label>Location</label>' +
+                               '      <select class="form-control" id="sliderEffect">' +
+                               '          <option value="fade" selected="selected">Fade</option>' +
+                               '          <option value="slide left">Slide Left</option>' +
+                               '          <option value="slide right">Slide Right</option>' +
+                               '          <option value="slide down">Slide Down</option>' +
+                               '          <option value="slide up">Slide Up</option>' +
+                               '      </select>' +
+                               '    </div>' +                                 
+                               '    <div class="col-md-6 form-group">' +
+                               '      <label>Speed</label>' +
+                               '      <input class="form-control" id="sliderSpeed" type="number" value="0.5" step="0.5" />' +
+                               '    </div>' +
+                               '  </div>' +
+                               '  <div class="row">' +
+                               '    <div class="col-md-6 form-check">' +
+                               '      <input type="checkbox" class="form-check-input" id="sliderAutoPlay" checked="checked">' +
+                               '      <label class="form-check-label" for="sliderAutoPlay">Auto Play</label>' +
+                               '    </div>' +
+                               '    <div class="col-md-6 form-group">' +
+                               '      <label>Interval</label>' +
+                               '      <input class="form-control" id="sliderInterval" type="number" value="4.0" step="0.5" />' +
+                               '    </div>' +                               
+                               '  </div>' +
+                               '</div></div>',
                         footer = '<button href="#" class="btn btn-primary" id="insert-slider">Insert Slider</button>';                             
 
                     //Create dialog
@@ -148,17 +148,37 @@
                             console.log('slider: addImage.click');
                             event.preventDefault();
                             let imageInputId = 'newImageSlide' + new Date().getTime();
-                            let imageInput = '<div class="card col-sm-5" style="display: inline-block;float: none;">';
+                            let imageInput = '<div class="card col-sm-10 mr-2 mb-2" style="display: inline-block;float: none;">';
                             imageInput += '<div class="card-body">';
-                            imageInput += '   <i class="fa fa-close pull-right" aria-hidden="true"></i>';
-                            imageInput += '   <div class="form-group">';
-                            imageInput += '      <label>Image Title</label>';
-                            imageInput += '      <input class="form-control" id="' + imageInputId + '" type="text" />';
-                            imageInput += '   </div>';
-                            imageInput += '   <div class="form-group">';
-                            imageInput += '      <label>Slide Content</label>';
-                            imageInput += '      <textarea class="form-control" rows="4" />';
-                            imageInput += '   </div>';
+                            imageInput += '   <div class="pb-4">';
+                            imageInput += '      <i class="fa fa-close pull-right" aria-hidden="true"></i>';
+                            imageInput += '      <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>';
+                            imageInput += '      <i class="fa fa-chevron-left pull-right" aria-hidden="true"></i>';
+                            imageInput += '   </div>';            
+                            imageInput += '   <div class="row">';                
+                            imageInput += '    <input class="form-control" type="hidden" value="image" />';
+                            imageInput += '    <div class="col-md-4">';   
+                            imageInput += '      <img src="todo" />'; 
+                            imageInput += '    </div>'; 
+                            imageInput += '    <div class="col-md-8">';   
+                            imageInput += '     <div class="form-group">';
+                            //imageInput += '        <label>Title</label>';
+                            imageInput += '        <input class="form-control" type="text" placeholder="Title (optional)" />';
+                            imageInput += '     </div>';
+                            imageInput += '     <div class="form-group">';
+                            //imageInput += '        <label>Description</label>';
+                            imageInput += '        <textarea class="form-control" rows="2" placeholder="Description (optional)" />';
+                            imageInput += '     </div>';
+                            imageInput += '     <div class="form-group">';
+                            //imageInput += '        <label>Link URL</label>';
+                            imageInput += '        <input class="form-control" type="text" placeholder="Link URL (optional)" />';
+                            imageInput += '     </div>';                            
+                            imageInput += '     <div class="form-group">';
+                            //imageInput += '        <label>Image URL</label>';
+                            imageInput += '        <input class="form-control" id="' + imageInputId + '" type="text" placeholder="Image URL" />';
+                            imageInput += '     </div>';  
+                            imageInput += '    </div>'; 
+                            imageInput += '   </div>';                          
                             imageInput += '</div></div>'                            
                             $('#summernoteImageBrowserModal').attr('data-target-field', '#' + imageInputId);                            
                             //$addImage.before(imageInput);
@@ -166,7 +186,7 @@
                             let far = $('#sliderGroupContainer').width();
                             let pos = $('#sliderGroupContainer').scrollLeft() + far;
                             $('#sliderGroupContainer').animate( { scrollLeft: pos }, 500 );                            
-                            //$.get("/Admin/ContentEditor/_ImageBrowserModalContent", function (data) {
+                            //$.get("/Admin/ContentEditor/_ImageBrowserModalContent", function (data) { //TODO: (CMS) Pass along something to not show modal form fields
                             //    $(".modal-content", '#summernoteImageBrowserModal').html(data);
                                 $(".modal-content", '#summernoteImageBrowserModal').html('Test Image Browser HTML<button onclick="$(\'#' + imageInputId + '\').val(\'test image val\');">test</button>'); //test only, uncomment wrapped area
                                 $('#summernoteImageBrowserModal').off("shown.bs.modal");
@@ -188,6 +208,26 @@
                                         .parentNode
                                         .remove();
                                 });
+                            var $moveLeftBtn = self
+                                .$dialog
+                                .find('.fa-chevron-left')
+                                .off('click')
+                                .click(function (event) {
+                                    event.preventDefault();
+                                    if(event.currentTarget.parentNode.parentNode.parentNode.previousElementSibling) {
+                                        event.currentTarget.parentNode.parentNode.parentNode.parentNode.insertBefore(event.currentTarget.parentNode.parentNode.parentNode, event.currentTarget.parentNode.parentNode.parentNode.previousElementSibling);
+                                    }
+                                });      
+                            var $moveRightBtn = self
+                                .$dialog
+                                .find('.fa-chevron-right')
+                                .off('click')
+                                .click(function (event) {
+                                    event.preventDefault();
+                                    if(event.currentTarget.parentNode.parentNode.parentNode.nextElementSibling) {
+                                        event.currentTarget.parentNode.parentNode.parentNode.parentNode.insertBefore(event.currentTarget.parentNode.parentNode.parentNode.nextElementSibling, event.currentTarget.parentNode.parentNode.parentNode);
+                                    }
+                                });                              
                         });
 
                         var $addVideo = self
@@ -198,25 +238,45 @@
                             console.log('slider: addVideo.click');
                             event.preventDefault();
                             let videoInputId = 'newVideoSlide' + new Date().getTime();
-                            let videoInput = '<div class="card col-sm-5" style="display: inline-block;float: none;">';
+                            let videoInput = '<div class="card col-sm-10 mr-2 mb-2" style="display: inline-block;float: none;">';
                             videoInput += '<div class="card-body">';
-                            videoInput += '   <i class="fa fa-close pull-right" aria-hidden="true"></i>';
-                            videoInput += '   <div class="form-group">';
-                            videoInput += '      <label>Video Title</label>';
-                            videoInput += '      <input class="form-control" id="' + videoInputId + '" type="text" />';
-                            videoInput += '   </div>';
-                            videoInput += '   <div class="form-group">';
-                            videoInput += '      <label>Slide Content</label>';
-                            videoInput += '      <textarea class="form-control" rows="4" />';
-                            videoInput += '   </div>';
-                            videoInput += '</div></div>'                            
+                            videoInput += '   <div class="pb-4">';
+                            videoInput += '      <i class="fa fa-close pull-right" aria-hidden="true"></i>';
+                            videoInput += '      <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>';
+                            videoInput += '      <i class="fa fa-chevron-left pull-right" aria-hidden="true"></i>';
+                            videoInput += '   </div>';            
+                            videoInput += '   <div class="row">';    
+                            videoInput += '    <input class="form-control" type="hidden" value="video" />';            
+                            videoInput += '    <div class="col-md-4">';   
+                            videoInput += '      <img src="todo" />'; 
+                            videoInput += '    </div>'; 
+                            videoInput += '    <div class="col-md-8">';   
+                            videoInput += '     <div class="form-group">';
+                            //videoInput += '        <label>Title</label>';
+                            videoInput += '        <input class="form-control" type="text" placeholder="Title (optional)" />';
+                            videoInput += '     </div>';
+                            videoInput += '     <div class="form-group">';
+                            //videoInput += '        <label>Description</label>';
+                            videoInput += '        <textarea class="form-control" rows="2" placeholder="Description (optional)" />';
+                            videoInput += '     </div>';
+                            videoInput += '     <div class="form-group">';
+                            //videoInput += '        <label>Link URL</label>';
+                            videoInput += '        <input class="form-control" type="text" placeholder="Link URL (optional)" />';
+                            videoInput += '     </div>';                            
+                            videoInput += '     <div class="form-group">';
+                            //videoInput += '        <label>Image URL</label>';
+                            videoInput += '      <input class="form-control" id="' + videoInputId + '" type="text" placeholder="Image URL" />';
+                            videoInput += '     </div>';  
+                            videoInput += '    </div>'; 
+                            videoInput += '   </div>';                          
+                            videoInput += '</div></div>'                              
                             $('#summernoteYouTubeBrowserModal').attr('data-target-field', '#' + videoInputId);
                             //$addImage.before(videoInput);
                             $('#sliderGroupContainer').append(videoInput);
                             let far = $('#sliderGroupContainer').width();
                             let pos = $('#sliderGroupContainer').scrollLeft() + far;
                             $('#sliderGroupContainer').animate( { scrollLeft: pos }, 500 );                            
-                            //$.get("/Admin/ContentEditor/_YouTubeBrowserModalContent", function (data) {
+                            //$.get("/Admin/ContentEditor/_YouTubeBrowserModalContent", function (data) { //TODO: (CMS) Pass along something to not show modal form fields
                             //    $(".modal-content", '#summernoteYouTubeBrowserModal').html(data);
                                 $(".modal-content", '#summernoteYouTubeBrowserModal').html('Test Image Browser HTML<button onclick="$(\'#' + videoInputId + '\').val(\'test video val\');">test</button>'); //test only, uncomment wrapped area
                                 $('#summernoteYouTubeBrowserModal').off("shown.bs.modal");
@@ -238,157 +298,46 @@
                                         .parentNode
                                         .remove();
                                 });
+                            var $moveLeftBtn = self
+                                .$dialog
+                                .find('.fa-chevron-left')
+                                .off('click')
+                                .click(function (event) {
+                                    event.preventDefault();
+                                    if(event.currentTarget.parentNode.parentNode.parentNode.previousElementSibling) {
+                                        event.currentTarget.parentNode.parentNode.parentNode.parentNode.insertBefore(event.currentTarget.parentNode.parentNode.parentNode, event.currentTarget.parentNode.parentNode.parentNode.previousElementSibling);
+                                    }
+                                });      
+                            var $moveRightBtn = self
+                                .$dialog
+                                .find('.fa-chevron-right')
+                                .off('click')
+                                .click(function (event) {
+                                    event.preventDefault();
+                                    if(event.currentTarget.parentNode.parentNode.parentNode.nextElementSibling) {
+                                        event.currentTarget.parentNode.parentNode.parentNode.parentNode.insertBefore(event.currentTarget.parentNode.parentNode.parentNode.nextElementSibling, event.currentTarget.parentNode.parentNode.parentNode);
+                                    }
+                                });                                                             
                         });                        
 
-                    // We should add some additional UI markup to these elements to indicate what
-                    // they are/do
 
-                    /*
+                    /* Not sure if we'll use a popover, but leaving for the future
                     this.$popover = ui.popover({
                         className: 'note-slider-popover',
                         callback: ($node) => {
                             const $content = $node.find('.popover-content,.note-popover-content');
                         }
-                    })
+                        })
                         .render()
                         .appendTo(options.container);
                     const $content = this
                         .$popover
                         .find('.popover-content,.note-popover-content');
 
-                    context.invoke('buttons.build', $content, options.popover.tabs);
+                    context.invoke('buttons.build', $content, options.popover.slider);
                     */
                 }
                 
-                /*
-                this.moveTabLeft = function () {
-                    let currentTab = $(this.nodes[0])
-                        .closest('.nav-item')
-                        .get(0);
-                    let previousTab = currentTab.previousElementSibling;
-                    if (previousTab) {
-                        let newNode = currentTab
-                            .parentNode
-                            .insertBefore(currentTab, previousTab);
-                        const ph = $(this.nodes[0])
-                            .get(0)
-                            .parentElement;
-                        const pos = $(ph).offset();
-                        const height = $(ph).outerHeight(true); // include margin
-                        this
-                            .$popover
-                            .css({
-                                display: 'block',
-                                left: pos.left,
-                                top: pos.top - height
-                            });
-                    }
-                }
-
-                this.moveTabRight = function () {
-                    let currentTab = $(this.nodes[0])
-                        .closest('.nav-item')
-                        .get(0);
-                    let nextTab = currentTab.nextElementSibling;
-                    if (nextTab) {
-                        let newNode = currentTab
-                            .parentNode
-                            .insertBefore(nextTab, currentTab);
-                        const ph = $(this.nodes[0])
-                            .get(0)
-                            .parentElement;
-                        const pos = $(ph).offset();
-                        const height = $(ph).outerHeight(true); // include margin
-                        this
-                            .$popover
-                            .css({
-                                display: 'block',
-                                left: pos.left,
-                                top: pos.top - height
-                            });
-                    }
-                }
-
-                this.addTab = function () {
-                    let contentId = $(this.nodes[0].parentElement).attr('aria-controls');
-                    let currentTab = $(this.nodes[0])
-                        .closest('.nav-item')
-                        .get(0);
-                    let currentContent = document.getElementById(contentId);
-                    //Get name of ul container
-                    let tabContainer = $(currentTab)
-                        .closest('.tabs-container')
-                        .get(0);
-                    let newId = 'newTab' + new Date().getTime();
-                    var newTab = document.createElement('li');
-                    newTab
-                        .classList
-                        .add('nav-item');
-                    newTab.innerHTML = '<a class="nav-link" id="' + newId + '-tab" data-toggle="tab" href="#' + newId + '-tab-content" role="tab" aria-controls="' + newId + '-tab-content" aria-selected="true">New Tab</a>';
-                    tabContainer.insertBefore(newTab, currentTab.nextElementSibling);
-                    //Get tab content container
-                    let tabContentContainer = document.getElementById(tabContainer.id + 'Content');
-                    var newTabContent = document.createElement('div');
-                    newTabContent
-                        .classList
-                        .add('tab-pane');
-                    newTabContent
-                        .classList
-                        .add('fade');
-                    newTabContent.id = newId + '-tab-content';
-                    newTabContent.setAttribute('role', 'tabpanel');
-                    newTabContent.setAttribute('aria-labelledby', newId + '-tab');
-                    newTabContent.innerHTML = "<p>Add Content Here</p>";
-                    tabContentContainer.insertBefore(newTabContent, currentContent.nextElementSibling);
-                    $('#' + newId + '-tab').trigger('click');
-                }
-
-                this.removeTab = function () {
-                    //Current tab
-                    let contentId = $(this.nodes[0].parentElement).attr('aria-controls');
-                    let currentTab = $(this.nodes[0])
-                        .closest('.nav-item')
-                        .get(0);
-                    //Get name of ul container
-                    let tabContainer = $(currentTab)
-                        .closest('.tabs-container')
-                        .get(0);
-                    //Get tab content container
-                    let tabContentContainer = document.getElementById(tabContainer.id + 'Content');
-                    let previousTab = currentTab.previousElementSibling;
-                    let nextTab = currentTab.nextElementSibling;
-                    //Remove tab
-                    currentTab.remove();
-
-                    //Remove tab content
-                    let content = document.getElementById(contentId);
-                    content.remove();
-
-                    //if there are no other tabs, remove tab containers
-                    if ($(tabContainer).find('.nav-item').length == 0) {
-                        if ($(tabContainer).closest('.tabs-block')) {
-                            $(tabContainer)
-                                .closest('.tabs-block')
-                                .remove();
-                        } else {
-                            tabContentContainer.remove();
-                            tabContainer.remove();
-                        }
-                    } else {
-                        if (previousTab) {
-                            $(previousTab)
-                                .find('.nav-link')
-                                .last()
-                                .trigger('click');
-                        } else if (nextTab) {
-                            $(nextTab)
-                                .find('.nav-link')
-                                .last()
-                                .trigger('click');
-                        }
-                    }
-                }
-                */
 
                 this.showDialog = function () {
                     context.invoke('editor.saveRange');
@@ -402,43 +351,69 @@
                             ui.hideDialog(self.$dialog);
                             context.invoke('editor.restoreRange');
 
-                            //Create tabs
+                            //Create slides
                             if (data.length > 0) {
-                                var tabId = "tab" + new Date().getTime();
-                                var toInsert = '<ul class="nav nav-tabs tabs-container" id="' + tabId + '" role="tablist">';
-                                var activeTab = 'active';
-                                for (var i = 0; i < data.length; i++) {
-                                    var myId = tabId + (i + 1);
-                                    toInsert += '<li class="nav-item">';
-                                    toInsert += '   <a class="nav-link ' + activeTab + '" id="' + myId + '-tab" data-toggle="tab" href="#' + myId + '-tab-content" role="tab" aria-controls="' + myId + '-tab-content" aria-selected="true">' + data[i].title + '</a>';
-                                    toInsert += '</li>';
-                                    activeTab = '';
-                                }
-                                toInsert += '</ul>';
-                                toInsert += '<div class="tab-content" id="' + tabId + 'Content">'
-                                activeTab = 'show active';
-                                for (var i = 0; i < data.length; i++) {
-                                    var myId = tabId + (i + 1);
-                                    toInsert += '<div class="tab-pane fade ' + activeTab + '" id="' + myId + '-tab-content" role="tabpanel" aria-labelledby="' + myId + '-tab"><p>' + data[i].content + '</p></div>';
-                                    activeTab = '';
-                                }
+                                //Get slider main form fields
+                                let location = self.$dialog.find('#sliderLocation').val(),
+                                    height = self.$dialog.find('#sliderHeight').val(),
+                                    effect = self.$dialog.find('#sliderEffect').val(),
+                                    speed = self.$dialog.find('#sliderSpeed').val(),
+                                    autoPlay = self.$dialog.find('#sliderAutoPlay').get(0).checked,
+                                    interval = self.$dialog.find('#sliderInterval').val();
 
-                                toInsert += '</div>';
+                                var sliderId = "slider" + new Date().getTime();
                                 var div = document.createElement('div');
-                                div
-                                    .classList
-                                    .add('tabs-block');
+                                div.id = sliderId;
+                                div.classList.add('slideshow');
+                                div.setAttribute('data-location', location);
+                                div.setAttribute('data-height', height);
+                                div.setAttribute('data-speed', speed);
+                                div.setAttribute('data-effect', effect);
+                                div.setAttribute('data-autoplay', autoPlay);
+                                div.setAttribute('data-interval', interval);
+                                var toInsert = '';
+                                for (var i = 0; i < data.length; i++) {
+                                    toInsert += '<div class="slide">';
+                                    toInsert += '   <div class="slide-content">';
+                                    if(data[i].title) {
+                                        toInsert += '      <h2>' + data[i].title + '</h2>';
+                                    }
+                                    if(data[i].description) {
+                                        toInsert += '      <p>' + data[i].description + '</p>';
+                                    }
+                                    if(data[i].linkURL) {
+                                        toInsert += '      <a href="' + data[i].linkURL + '" class="btn btn-primary">Click for details</a>';
+                                    }
+                                    toInsert += '   </div>';
+                                    toInsert += '   <div class="slide-image">';
+                                    if(data[i].type === "image") {
+                                        toInsert += '   <img src="' + data[i].imageURL + '" />';
+                                    } else if(data[i].type === "video") {
+                                        toInsert += '   <p>TODO: YouTube IFrame: ' + data[i].imageURL + '"</p>';
+                                    }
+                                    toInsert += '   </div>';                                    
+                                    toInsert += '</div>';
+                                }
                                 div.innerHTML = toInsert;
+
                                 if (nodes.length > 1) {
-                                    alert('More than 1 HTML element is selected. Simplify your selection before adding tabs' +
+                                    alert('More than 1 HTML element is selected. Simplify your selection before adding a slider' +
                                             '.');
-                                } else if ($(nodes[0]).closest('.tab-pane').length || $(nodes[0]).closest('.card-body').length) {
+                                } else if(nodes.length === 1) { //if ($(nodes[0]).closest('.tab-pane').length || $(nodes[0]).closest('.card-body').length) {
                                     //If this is inside of a tab panel, directly insert node
                                     // TODO: Only do this for a single node..probably need to disable tab if more
                                     // than 1 node selected
-                                    nodes[0]
-                                        .parentNode
-                                        .insertBefore(div, nodes[0].nextEleSibling);
+                                    if(nodes[0].nodeName === "#text") {                                    
+                                        nodes[0]
+                                            .parentNode
+                                            .parentNode
+                                            .replaceChild(div, nodes[0].parentNode);
+                                    } else {
+                                        nodes[0]
+                                            .parentNode
+                                            .replaceChild(div, nodes[0]);
+                                            //.insertBefore(div, nodes[0].nextElementSibling);
+                                    }
                                 } else {
                                     // Let summernote insert the node, summernote will split/close nodes to ensure
                                     // HTML makes sense. This is good, but it does not work well inside a tab content
@@ -469,12 +444,15 @@
                                     var data = [];
                                     var $formInput = self
                                         .$dialog
-                                        .find('.form-control');
-                                    for (var i = 0; i < $formInput.length; i = i + 2) {
+                                        .find('#sliderGroupContainer .form-control');
+                                    for (var i = 0; i < $formInput.length; i = i + 5) {
                                         if($formInput[i].value){
                                             data.push({
-                                                title: $formInput[i].value,
-                                                content: $formInput[i + 1].value
+                                                type: $formInput[i].value,
+                                                title: $formInput[i + 1].value,
+                                                description: $formInput[i + 2].value,
+                                                linkURL: $formInput[i + 3].value,
+                                                imageURL: $formInput[i + 4].value
                                             });
                                         }
                                     }
@@ -483,11 +461,11 @@
                             });
 
                         ui.onDialogHidden(self.$dialog, function () {
-                            console.log('tabs::onDialogHidden');
+                            console.log('slider::onDialogHidden');
                             // Remove panel
                             var $sliderPanel = self
                                 .$dialog
-                                .find('.card');
+                                .find('.card:not(#sliderMainCard)');
                             for (var i = 0; i < $sliderPanel.length; i++) {
                                 $sliderPanel[i].remove();
                             }
@@ -497,7 +475,7 @@
                         if (nodes.length > 1) {
                             alert('More than 1 HTML element is selected. Simplify your selection before adding a slider' +
                                     '.');
-                        } else if (rng.isOnTab() || rng.isOnAccordion()) {
+                        } else if (rng.isOnTab() || rng.isOnAccordion()) {// || $(this.nodes[0]).closest('.tab-content') || $(this.nodes[0]).closest('.accordion-container')) {
                             alert('You cannot insert a slider inside a tab or accordion heading.');
                         } else {
                             ui.showDialog(self.$dialog);

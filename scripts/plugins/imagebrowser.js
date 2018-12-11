@@ -33,10 +33,10 @@
             }                
             context.memo('button.imagebrowser', function () {
                 var button = ui.button({
-                    contents: '<i class="fa fa-image"/> Image',
+                    contents: '<i class="fa fa-image"/>',
                     title: 'Image',
                     container: false,
-                    tooltip: 'Image Browser',
+                    tooltip: 'Insert Image',
                     click: function () {
                         activeEditorContext = context;
                         context.invoke('saveRange');

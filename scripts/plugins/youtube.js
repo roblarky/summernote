@@ -25,10 +25,10 @@
             }
             context.memo('button.youtubebrowser', function () {
                 var button = ui.button({
-                    contents: '<i class="fa fa-tv"/> Video',
+                    contents: '<i class="fa fa-youtube"/>',
                     title: 'Video',
                     container: false,
-                    tooltip: 'Video Browser',
+                    tooltip: 'Insert YouTube Video',
                     click: function () {
                         activeEditorContext = context;
                         context.invoke('saveRange');

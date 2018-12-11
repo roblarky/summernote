@@ -28,7 +28,7 @@
                 context.memo('button.accordionDialog', function () {
                     // create button
                     var button = ui.button({
-                        contents: '<i class="fa fa-bars"/> Accordion',
+                        contents: '<i class="fa fa-bars"/>',
                         container: false,
                         tooltip: "Insert a new accordion set",
                         click: function () {
@@ -133,9 +133,21 @@
                         body = '<div class="container"><div class="row flex-nowrap" id="accordionGroupContainer" style="overflow-x: auto;white-space: nowrap;"></div></div><div class="pt-2"><button href="#" class="btn btn-primary" id="add-accordion">Add Section</button></div>',
                         footer = '<button href="#" class="btn btn-primary" id="insert-accordion">Insert Accordion<' +
                                 '/button>',
-                        accordionInput = '<div class="card col-sm-5" style="display: inline-block;float: none;"><div class="card-body"><i class="fa fa-close pull-right" aria-' +
-                                'hidden="true"></i><div class="form-group"><label>Heading</label><input c' +
-                                'lass="form-control" type="text" /></div><div class="form-group"><label>Content</label><textarea class="form-control" rows="4" /></div></div></div>';
+                        accordionInput = '<div class="card col-sm-5 mr-2 mb-2" style="display: inline-block;float: none;">' +
+                                         '  <div class="card-body">' +
+                                         '    <i class="fa fa-close pull-right" aria-hidden="true"></i>' +
+                                         '    <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>' +
+                                         '    <i class="fa fa-chevron-left pull-right" aria-hidden="true"></i>' +
+                                         '    <div class="form-group">' +
+                                         '      <label>Heading</label>' +
+                                         '      <input class="form-control" type="text" />' +
+                                         '    </div>' +
+                                         '    <div class="form-group">' +
+                                         '      <label>Content</label>' +
+                                         '      <textarea class="form-control" rows="4" />' +
+                                         '    </div>' +
+                                         '  </div>' +
+                                         '</div>';
 
                     //Create dialog
                     this.$dialog = ui
@@ -165,6 +177,26 @@
                                         .parentNode
                                         .remove();
                                 });
+                            var $moveLeftBtn = self
+                                .$dialog
+                                .find('.fa-chevron-left')
+                                .off('click')
+                                .click(function (event) {
+                                    event.preventDefault();
+                                    if(event.currentTarget.parentNode.parentNode.previousElementSibling) {
+                                        event.currentTarget.parentNode.parentNode.parentNode.insertBefore(event.currentTarget.parentNode.parentNode, event.currentTarget.parentNode.parentNode.previousElementSibling);
+                                    }
+                                });      
+                            var $moveRightBtn = self
+                                .$dialog
+                                .find('.fa-chevron-right')
+                                .off('click')
+                                .click(function (event) {
+                                    event.preventDefault();
+                                    if(event.currentTarget.parentNode.parentNode.nextElementSibling) {
+                                        event.currentTarget.parentNode.parentNode.parentNode.insertBefore(event.currentTarget.parentNode.parentNode.nextElementSibling, event.currentTarget.parentNode.parentNode);
+                                    }
+                                });                                  
                         });
 
                     // We should add some additional UI markup to these elements to indicate what
@@ -327,13 +359,21 @@
                                 div.innerHTML = toInsert;
                                 if (nodes.length > 1) {
                                     alert('More than 1 node selected.');
-                                } else if ($(nodes[0]).closest('.tab-pane').length || $(nodes[0]).closest('.card-body').length) {
+                                } else if(nodes.length === 1) { //if ($(nodes[0]).closest('.tab-pane').length || $(nodes[0]).closest('.card-body').length) {
                                     //If this is insite of a tab panel, directly insert node
                                     // TODO: Only do this for a single node..probably need to disable accordion if
                                     // more than 1 node selected
-                                    nodes[0]
-                                        .parentNode
-                                        .insertBefore(div, nodes[0].nextElementSibling);
+                                    if(nodes[0].nodeName === "#text") {                                    
+                                        nodes[0]
+                                            .parentNode
+                                            .parentNode
+                                            .replaceChild(div, nodes[0].parentNode);
+                                    } else {
+                                        nodes[0]
+                                            .parentNode
+                                            .replaceChild(div, nodes[0]);
+                                            //.insertBefore(div, nodes[0].nextElementSibling);
+                                    }
                                 } else {
                                     // Let summernote insert the node, summernote will split/close nodes to ensure
                                     // HTML makes sense. This is good, but it does not work well inside a tab content
@@ -390,7 +430,7 @@
                         let nodes = rng.nodes();
                         if (nodes.length > 1) {
                             alert('More than one node is selected.');
-                        } else if (rng.isOnTab() || rng.isOnAccordion()) {
+                        } else if (rng.isOnTab() || rng.isOnAccordion()) {//} || $(this.nodes[0]).closest('.tab-content') || $(this.nodes[0]).closest('.accordion-container')) {
                             alert('You cannot insert tabs inside a tab or accordion heading.');
                         } else {
                             ui.showDialog(self.$dialog);
